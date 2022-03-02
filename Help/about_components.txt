@@ -1,0 +1,21 @@
+HTML: 
+
+block head:
+rel: defines the relationship between a linked resource and the current document.
+href: used to create a link  to another page(or file)
+end block 
+
+block body:
+h1: header 
+div: division/section
+class: The class attribute is mostly used to point to a class in a style sheet
+	E.g.: content, form
+
+form: to create a form for input and then submit button
+
+
+
+PY CODE:
+uClient: HTTP response after open the URL
+uClient.read(): returns a byte code for the URL data
+flipkart_html: bs4 object after html parser

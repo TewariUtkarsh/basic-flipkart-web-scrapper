@@ -1,0 +1,9 @@
+1. create app.py
+2. add requirements.txt and runtime.txt
+3. conda create -n env python=3.6.9
+4. conda activate Basic_Flipkart_Review_Scrapper
+5. pip install -r requirements.txt
+6. add py interpreter into pycharm
+7. create static and templates folder for html and css files and also add the files
+8. Update the code based on your choice
+9. Deployment:

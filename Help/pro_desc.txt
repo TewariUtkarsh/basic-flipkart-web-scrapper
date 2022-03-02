@@ -1,0 +1,117 @@
+Python Project 
+
+Theme: 
+1. Review Scrapper: Scrap/extract all the reviews data(reviews, ratings, username, etc.) from websites like Flipkart, Amazaon etc. so that in the future we can utilize these data as we won't be doing copy paste of data
+2. Image Scrapper
+
+using Web UI for representation
+also to understand the limitations of scrapper
+
+Problem Statement: 
+
+Deployment in: Heroku, aws, azure, gcp
+Amazon wont allow to hit their website 20 times a day from the same ip. there is a lib using which we can switch ip
+
+Program explanation:
+Libraries:
+-> Flask: generate api's, templates
+-> flask_cors: cross-origin(), when we will deploy our project in US region but hit it from India, so we need this package. Thus to do a cross origin transaction
+-> beautiful_soup: for parsing html/exl code
+
+Functions:
+-> render_template: to execute/expose html or css file then it will render or execute the file
+
+Explain:
+-> flipkart_url: url for searching the query(item)
+-> uReq: open the url that i have passed, here url=flipkart_url, we are on the searching page of url
+-> uClient = stores the response of of uReq
+-> uClient.read(): reads the entire HTML page present on the particular URL
+	> now we have to segregate data of each search result
+-> uClient.close(): to close the uClient
+-> bs: alias for beautiful soup. used for web scraping purposes to pull the data out of HTML and XML files
+-> flipkart_html = bs(page, "html.parser"): for parsing html file that we extracted thus beautifying it
+-> findAll(): here class id and tag to choose particular search result
+		href: h reference contains the url which will redirect us to the info the particular item(mobile phone). Product detail(a href: anchor tag href link to product detail page)
+-> after getting product link now for this page extract the data using requests.get(for getting html code) and parse it using bs
+-> 
+
+
+Productionize our basic scrapper project
+Host the project in a global system where everyone can access it from anywhere using a global url
+
+HEROKU: free cloud platform is free by SalesForce.
+steps:
+-> login to heroku
+-> create app
+-> deploy at heroku git
+-> install heroku cli
+-> open cmd then cd to the project folder
+-> pip install GitPython(push local git to heroku git)
+-> establish connection b/w local and heroku(acc) then login
+-> git init
+-> git status
+-> heroku git:remote -a web-scrapper-ut (this is the cmd from heroku website)
+-> git add . (from the Heroku website)
+-> git commit -am "make it better" (from the Heroku website) (here -am means app message
+-> git push heroku master (from the heroku website)
+-> Deployment URL: https://web-scrapper-ut.herokuapp.com/
+-> use "Open App" from the website to access ur deployed app
+-> u can rollback to previous version
+-> u can clone from the website
+-> use of procfile: whenever we are going to deploy , we use gunicorn
+
+AWS:
+-> login
+-> services tab
+-> compute tab-> elastic beanstalk(create application)
+-> create new enviornment
+-> provide app name
+-> (optional): applicatoin tag
+-> platform: python
+-> version: 3.6.9
+-> application code: sample application 
+-> create
+Next
+-> services tab
+-> developer tools tab-> code pipeline
+-> create pipeline
+-> provide a name
+-> go Next
+-> source: Github version 2
+-> connect to Github
+-> provide connection name then login 
+-> then install a new app
+-> use the account that is available
+-> save it
+-> select the particular repo to be conneted
+-> select the branch
+-> next
+-> skip the build stage
+-> now deploying in the beanstalk
+-> select elastic beanstalk
+-> provide the application name
+-> next
+-> create pipeline
+-> success
+-> to open the app, go to elastic beanstalk, choose the envir(app), open the deployment url
+
+
+AZURE:
+-> create a resource
+-> more os -> web app -> create
+-> create a resource group
+-> provide web app name
+-> publish code
+-> runtime stack-> python
+-> os->linux by default
+-> region -> auto
+-> review + create-> to review -> create
+-> go to home
+-> open ur app present on the dashboard
+-> go to deployment center
+-> source: github-> fill in the form required for github
+-> save
+-> u can check the logs
+-> check github->repo->action tab
+->go to ur web name-> RHS url will be generated->deployment competed
+

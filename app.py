@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin
 import requests
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen
+from database_management import DB_management
 
 app = Flask(__name__)
 
@@ -40,6 +41,23 @@ def review():
 
     if (request.method == 'POST'):
 
+        search_str = request.form['content'].replace(" ", "")
+        try:
+            db_obj = DB_management(db_type='mongo_DB')
+            # db_obj = DB_management(db_type='cassandra')
+            db_obj = db_obj.assign_DB()
+
+            db_obj.create_client()
+            # db_obj.create_session()
+
+            database = db_obj.create_database(db_name="basic_scrapper")
+
+            collection = db_obj.create_collection(database=database, coll_name=search_str)
+
+        except Exception as e:
+            print(f"Exception Handled in DB operation: {e}")
+            return "Something went wrong."
+
         try:
             search_str = request.form['content'].replace(" ", "")
             flipkart_base_url = "https://flipkart.com"
@@ -74,6 +92,10 @@ def review():
             file = open(filename, 'w')
             columns = "Product, Customer Name, Rating, Comment Heading, Comment \n"
             file.write(columns)
+
+            # Creating table in Cassandra based on the columns
+            # col_var = columns[:-3].split(", ")
+            # db_obj.create_table(table_name=search_str, columns=col_var)
 
             reviews_list = []
 
@@ -110,8 +132,13 @@ def review():
 
                 review_dict = {"Product": search_str, "Customer Name": name, "Rating": ratings,
                                "Comment Heading": heading, "Comment": cust_comment}
+
+                db_obj.insert_record(collection=collection, record=review_dict)
+                # db_obj.insert_record(table_name=search_str, columns=col_var, record=review_dict)
+
                 reviews_list.append(review_dict)
 
+            # db_obj.delete_record(collection=collection)
             return render_template("result.html", reviews=reviews_list[:(len(reviews_list) - 1)])
 
         except Exception as e:

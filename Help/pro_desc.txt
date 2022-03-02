@@ -4,6 +4,11 @@ Theme:
 1. Review Scrapper: Scrap/extract all the reviews data(reviews, ratings, username, etc.) from websites like Flipkart, Amazaon etc. so that in the future we can utilize these data as we won't be doing copy paste of data
 2. Image Scrapper
 
+
+Files:
+procfile: it is imp for deployment on multiple platforms
+
+
 using Web UI for representation
 also to understand the limitations of scrapper
 
@@ -79,7 +84,7 @@ Next
 -> go Next
 -> source: Github version 2
 -> connect to Github
--> provide connection name then login 
+-> provide connection name then login (can be of ur choice)
 -> then install a new app
 -> use the account that is available
 -> save it
@@ -87,8 +92,8 @@ Next
 -> select the branch
 -> next
 -> skip the build stage
--> now deploying in the beanstalk
--> select elastic beanstalk
+-> now deploying in the beanstalk:
+	select elastic beanstalk deploy provider
 -> provide the application name
 -> next
 -> create pipeline
